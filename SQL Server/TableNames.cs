@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using Utility.SQL_Server;
 using Utility.Base.Abstration;
 
-namespace Database_Reference.SQL_Server
+namespace Utility.SQL_Server
 {
     public abstract class TableNames
     {
         [HideProperty]
-        public int Lenght => PropertyManager<TableNames>.Propertys.Select(e => e.Name).ToList().Count;
+        public int Lenght => PropertyManager<TableNames>.PropertyCount;
         [HideProperty]
-        public List<string> AllElements => PropertyManager<TableNames>.Propertys.Select(e => e.Name).ToList();
+        public List<string> AllElements => PropertyManager<TableNames>.PropertyNames;
     }
 }

@@ -17,8 +17,10 @@ namespace Utility.Base.Abstration
         // returns a List of all relevant Propertys of Class T while ignoring all Propertys tagged with the Attribute "HideProperty"
         public static List<PropertyInfo> Propertys => EnumProperties.ToList();
 
-        private static IEnumerable<PropertyInfo> EnumProperties => typeof(T).GetProperties().Where(prop => !prop.CustomAttributes.Where(e => e.AttributeType.Name == nameof(AvalibleAttributes.HideProperty)).Any());
+        // returns the amout of all relevant Propertys of Class T while ignoring all Propertys tagged with the Attribute "HideProperty"
+        public static int PropertyCount => EnumProperties.Count();
 
+        private static IEnumerable<PropertyInfo> EnumProperties => typeof(T).GetProperties().Where(prop => !prop.CustomAttributes.Where(e => e.AttributeType.Name == nameof(AvalibleAttributes.HideProperty)).Any());
 
     }
 }
