@@ -22,7 +22,7 @@ namespace Utility.SQL_Server
         {
             var g = PropertyManager<Model>.PropertyNames;
 
-            GetType().GetProperties().Where(prop => prop.Name[0] != '_').Select(e => e).ToList().ForEach(prop => {command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(prop));});
+            PropertyManager<Model>.Propertys.ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(prop)));
         }
     }
 }

@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utility.SQL_Server;
+using Utility.Base.Abstration;
 
 namespace Database_Reference.SQL_Server
 {
     public abstract class TableNames
     {
         [HideProperty]
-        public int Lenght => GetType().GetProperties().Where(prop => prop.Name[0] != '_').Select(e => e.Name).ToList().Count;
+        public int Lenght => PropertyManager<TableNames>.Propertys.Select(e => e.Name).ToList().Count;
         [HideProperty]
-        public List<string> AllElements => GetType().GetProperties().Where(prop => prop.Name[0] != '_').Select(e => e.Name).ToList();
+        public List<string> AllElements => PropertyManager<TableNames>.Propertys.Select(e => e.Name).ToList();
     }
 }
