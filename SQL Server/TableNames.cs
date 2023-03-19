@@ -11,9 +11,12 @@ namespace Utility.SQL_Server
 {
     public abstract class TableNames
     {
+        public static TableName NewTable(string name) { return new TableName(name); }
+        
         [HideProperty]
-        public int Lenght => PropertyManager<TableNames>.PropertyCount;
+        public int Lenght => PropertyManager.PropertyCount(this);
         [HideProperty]
-        public List<string> AllElements => PropertyManager<TableNames>.PropertyNames;
+        public List<string> AllElements => PropertyManager.PropertyValues<TableName>(this).Select(e => (string) e).ToList();
+        
     }
 }

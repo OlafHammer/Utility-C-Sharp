@@ -8,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection.Metadata;
 
 namespace Utility.SQL_Server
 {
@@ -16,13 +20,11 @@ namespace Utility.SQL_Server
         public int ID { get; set; }
 
         [HideProperty]
-        public string GenerateInsert => $"VALUES({string.Join(",", PropertyManager<Model>.PropertyNames)})";
+        public string GenerateInsert => $"VALUES({string.Join(",", PropertyManager.PropertyCount(this))})";
 
-        internal void AddValues(SqlCommand command)
+        public void AddValues(SqlCommand command)
         {
-            var g = PropertyManager<Model>.PropertyNames;
-
-            PropertyManager<Model>.Propertys.ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(prop)));
+            PropertyManager.Propertys(this).ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(prop)));
         }
     }
 }
