@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using System.Data.SqlClient;
+using Utility.Base.ResultHandler;
 
 namespace Utility.SQL_Server
 {
@@ -13,28 +14,24 @@ namespace Utility.SQL_Server
             ServerConnectionString = serverConnectionString;
         }
 
-        public void Insert(Model model, TableName name)
+        public SQLResult<int> Insert(Model model, TableName name) 
         {
             string sqlStatement = $"INSERT INTO {name} {model.GenerateInsert}";
 
-            using (SqlConnection connection = new (ServerConnectionString))
+            using SqlConnection connection = new(ServerConnectionString);
+            SqlCommand command = new(sqlStatement, connection);
+
+            model.AddValues(command);
+
+            try
             {
-                SqlCommand command = new (sqlStatement, connection);
-
-                model.AddValues(command);
-
-                try
-                {
-                    connection.Open();
-
-                    SqlDataReader reader = command.ExecuteReader();
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.StackTrace);
-                }
-
+                connection.Open();
+                int result = command.ExecuteNonQuery();
+                return new SQLResult<int> { Output = result, Statement = sqlStatement, Command = command };
+            }
+            catch (Exception ex)
+            {
+                return new SQLResult<int> { Error = ex, Output = 0,  Statement = sqlStatement, Command = command };
             }
         }
 
