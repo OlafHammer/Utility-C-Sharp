@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Utility.SQL_Server
 {
-    public class TableName
+    public class TableName : IComparable<TableName?>
     {
 
         public static implicit operator string(TableName d) => d.Name;
@@ -24,5 +24,11 @@ namespace Utility.SQL_Server
             return Name;
         }
 
+        public int CompareTo(TableName? obj)
+        {
+            if (obj == null) return -1;
+            if (obj.Name == Name) return 0;
+            return 1;
+        }
     }
 }
