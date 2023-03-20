@@ -15,13 +15,17 @@ namespace Utility.SQL_Server
         }
 
         // Inputs a Model into the given Table and returns a ResultClass while Output is the Number of Changed Lines
-        public SQLResult<int> Insert(Model model, TableName name) 
+        public SQLResult<int> Insert(Model model, TableName name, bool useAutoKey) 
         {
-            string sqlStatement = $"INSERT INTO {name} {model.GenerateInsert}";
+            string sqlStatement;
+            if (useAutoKey) 
+                sqlStatement = $"INSERT INTO {name} {model.GenerateInsert_AutoId}";
+            else
+                sqlStatement = $"INSERT INTO {name} {model.GenerateInsert}";
 
             using SqlConnection connection = new(ServerConnectionString);
-            SqlCommand command = new(sqlStatement, connection);
 
+            SqlCommand command = new(sqlStatement, connection);
             model.AddValues(command);
 
             try

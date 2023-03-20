@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Utility.Base.Attributes
 {
-    internal enum AvalibleAttributes
+    public enum AvalibleAttributes
     {
-        HideProperty
+        HideProperty,
+        SQLAutoIncrementingKey
     }
 }

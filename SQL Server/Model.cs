@@ -10,21 +10,30 @@ using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using static System.Net.Mime.MediaTypeNames;
 using System.Reflection.Metadata;
+using System.Net.NetworkInformation;
 
 namespace Utility.SQL_Server
 {
     public abstract class Model
     {
+        [HideProperty]
+        private const AvalibleAttributes hideProp = AvalibleAttributes.HideProperty;
+        [HideProperty]
+        private const AvalibleAttributes sqlAutoIncr = AvalibleAttributes.SQLAutoIncrementingKey;
+
+        [SQLAutoIncrementingKey]
         public int ID { get; set; }
 
         [HideProperty]
-        public string GenerateInsert => $" ({string.Join(",", PropertyManager.PropertyNames(this))}) VALUES({string.Join(",", PropertyManager.PropertyNames(this).Select(e => "@" + e))})";
+        public string GenerateInsert => $" ({string.Join(",", PropertyManager.PropertyNames(this, hideProp))}) VALUES({string.Join(",", PropertyManager.PropertyNames(this, hideProp).Select(e => "@" + e))})";
+
+        [HideProperty]
+        public string GenerateInsert_AutoId => $" ({string.Join(",", PropertyManager.PropertyNames(this, hideProp, sqlAutoIncr))}) VALUES({string.Join(",", PropertyManager.PropertyNames(this, hideProp, sqlAutoIncr).Select(e => "@" + e))})";
 
         public void AddValues(SqlCommand command)
         {
-            PropertyManager.Propertys(this).ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(this)));
+            PropertyManager.Propertys(this, hideProp).Where(item => command.Parameters.Contains(item)).ToList().ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(this)));
         }
     }
 }
