@@ -20,11 +20,11 @@ namespace Utility.SQL_Server
         public int ID { get; set; }
 
         [HideProperty]
-        public string GenerateInsert => $"VALUES({string.Join(",", PropertyManager.PropertyCount(this))})";
+        public string GenerateInsert => $" ({string.Join(",", PropertyManager.PropertyNames(this))}) VALUES({string.Join(",", PropertyManager.PropertyNames(this).Select(e => "@" + e))})";
 
         public void AddValues(SqlCommand command)
         {
-            PropertyManager.Propertys(this).ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(prop)));
+            PropertyManager.Propertys(this).ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(this)));
         }
     }
 }

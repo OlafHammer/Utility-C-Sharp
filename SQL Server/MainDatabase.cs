@@ -32,7 +32,7 @@ namespace Utility.SQL_Server
             }
             catch (Exception ex)
             {
-                return new SQLResult<int> { Error = ex, Output = 0,  Statement = sqlStatement, Command = command };
+                return new SQLResult<int> { Error = ex, Output = 0, Statement = sqlStatement, Command = command };
             }
         }
 
