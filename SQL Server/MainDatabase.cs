@@ -14,6 +14,7 @@ namespace Utility.SQL_Server
             ServerConnectionString = serverConnectionString;
         }
 
+        // Inputs a Model into the given Table and returns a ResultClass while Output is the Number of Changed Lines
         public SQLResult<int> Insert(Model model, TableName name) 
         {
             string sqlStatement = $"INSERT INTO {name} {model.GenerateInsert}";

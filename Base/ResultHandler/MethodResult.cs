@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Utility.Base.ResultHandler
 {
+
+    // Discribes a Basic return Value of an generic Method
     public class MethodResult<T> 
     {
         private bool _Success;
