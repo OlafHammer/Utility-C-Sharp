@@ -4,12 +4,12 @@ using Utility.Base.ResultHandler;
 
 namespace Utility.SQL_Server
 {
-    public class MainDatabase
+    public class DatabaseProvider
     {
 
         private string ServerConnectionString { get; }
 
-        public MainDatabase(string serverConnectionString)
+        public DatabaseProvider(string serverConnectionString)
         {
             ServerConnectionString = serverConnectionString;
         }
