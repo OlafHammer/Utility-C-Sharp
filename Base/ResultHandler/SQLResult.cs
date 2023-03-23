@@ -11,7 +11,6 @@ namespace Utility.Base.ResultHandler
     // Specific Return Value for Methods using SQL Commands
     public class SQLResult<T> : MethodResult<T> where T : IComparable
     {
-        public string Statement { get; set; } = "";
         public SqlCommand? Command { get; set; }
 
     }
