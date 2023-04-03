@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Utility.Base.Attributes.Classes;
 
-namespace Utility.Base.Attributes.Classes
+// Using the Attribute marks a Property to be ignored by PropertyManager
+public class HideProperty : Attribute
 {
-    // Using the Attribute marks a Property to be ignored by PropertyManager
-    public class HideProperty : Attribute {}
 }

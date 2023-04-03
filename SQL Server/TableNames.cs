@@ -1,22 +1,17 @@
-﻿using Utility.Base.Attributes.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utility.SQL_Server;
-using Utility.Base.Abstration;
+﻿using Utility.Base.Abstraction;
+using Utility.Base.Attributes.Classes;
 
-namespace Utility.SQL_Server
+namespace Utility.SQL_Server;
+
+public abstract class TableNames
 {
-    public abstract class TableNames
+    [HideProperty] public int Length => PropertyManager.PropertyCount(this);
+
+    [HideProperty]
+    public List<string> AllElements => PropertyManager.PropertyValues<TableName>(this).Select(e => (string)e).ToList();
+
+    public static TableName NewTable(string name)
     {
-        public static TableName NewTable(string name) { return new TableName(name); }
-        
-        [HideProperty]
-        public int Lenght => PropertyManager.PropertyCount(this);
-        [HideProperty]
-        public List<string> AllElements => PropertyManager.PropertyValues<TableName>(this).Select(e => (string) e).ToList();
-        
+        return new TableName(name);
     }
 }

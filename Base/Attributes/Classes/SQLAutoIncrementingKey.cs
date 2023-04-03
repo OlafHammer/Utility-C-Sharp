@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Utility.Base.Attributes.Classes;
 
-namespace Utility.Base.Attributes.Classes
+internal class SqlAutoIncrementingKey : Attribute
 {
-    internal class SQLAutoIncrementingKey : Attribute
-    {
-    }
 }

@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
-namespace Utility.Base.ResultHandler
+namespace Utility.Base.ResultHandler;
+
+// Specific Return Value for Methods using SQL Commands
+public class SqlResult<T> : MethodResult<T> where T : IComparable
 {
-    // Specific Return Value for Methods using SQL Commands
-    public class SQLResult<T> : MethodResult<T> where T : IComparable
-    {
-        public SqlCommand? Command { get; set; }
-
-    }
+    public SqlCommand? Command { get; set; }
 }
