@@ -8,6 +8,7 @@ namespace Utility.SQL_Server;
 /// <summary>
 ///     Provides an abstract Class for SQL Class Models with unique identifier
 ///     Also provides SQL Statement generation as well as injection save Parameter insertion
+///     All 
 /// </summary>
 public abstract class Model
 {
@@ -19,7 +20,7 @@ public abstract class Model
     ///     SQL Primary key / Unique identifier
     /// </summary>
     [SqlAutoIncrementingKey]
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     /// <summary>
     ///     Returns a String in the Format " (value1, value2) VALUES(@value1, @value2)" containing all Properties not marked as
@@ -37,6 +38,7 @@ public abstract class Model
     public string GenerateInsertAutoId =>
         $" ({string.Join(",", PropertyManager.PropertyNames(this, HideProp, SqlAutoIncr))}) VALUES({string.Join(",", PropertyManager.PropertyNames(this, HideProp, SqlAutoIncr).Select(e => "@" + e))})";
 
+
     /// <summary>
     ///     Adds Parameters with Value by
     ///     taking all available Properties which aren't marked with the "HideProperty" Attribute
@@ -49,4 +51,11 @@ public abstract class Model
         PropertyManager.Properties(this, HideProp).Where(item => command.CommandText.Contains(item.Name)).ToList()
             .ForEach(prop => command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(this)));
     }
+
+    public string GenerateUpdateByComparison(Model sqlModel)
+    {
+        throw new NotImplementedException(); // TODO
+    }
+
+    [HideProperty] public string GenerateUpdateByNullable => ""; // TODO
 }

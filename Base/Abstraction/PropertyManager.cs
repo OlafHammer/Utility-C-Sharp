@@ -18,7 +18,7 @@ public static class PropertyManager
         EnumProperties(t, attributes).ToList().ForEach(e =>
         {
             if (e.GetValue(t, null) is T val)
-                list.Add((T)val);
+                list.Add(val);
         });
         return list;
     }
